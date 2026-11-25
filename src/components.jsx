@@ -154,46 +154,84 @@ export function Hero({ projectCount, certCount, mode = "app", onExplore }) {
   )
 }
 
-/* ---------------- ABOUT (bento) + SKILLS ---------------- */
+/* ---------------- ABOUT (split profile + editorial + 2x2 skills) ---------------- */
 const ICONS = { code: Code2, database: Database, shield: ShieldCheck, pen: PenTool }
 export function About({ skillGroups }) {
   return (
     <section id="about" className="section">
       <SectionHead no="01" title="About" sub="Background, current focus, and the tools I work with." />
-      <div className="bento">
-        <motion.div className="bento-card bio-card" variants={fadeUp} initial="hidden" whileInView="show" viewport={viewportOnce}>
-          <p className="mono accent card-label"><FolderOpen size={13} /> BIO</p>
-          {(profile.paragraphs || []).map((p, i) => <p key={i} className={i === 0 ? "lead" : ""}>{p}</p>)}
-          <p className="mono dim-line"><MapPin size={14} /> {profile.location}</p>
-        </motion.div>
-        <motion.div className="bento-card now-card" variants={fadeUp} custom={1} initial="hidden" whileInView="show" viewport={viewportOnce}>
-          <p className="mono accent card-label"><Clock3 size={13} /> NOW</p>
-          <h3>{profile.nowTitle}</h3>
-          <p>{profile.now}</p>
-        </motion.div>
-        <motion.div className="bento-card edu-card" variants={fadeUp} custom={2} initial="hidden" whileInView="show" viewport={viewportOnce}>
-          <p className="mono accent card-label"><GraduationCap size={13} /> EDUCATION</p>
-          <h3>{profile.university}</h3>
-          <p>Focus: web development, computer networks, and HCI.</p>
-        </motion.div>
-        {(profile.highlights || []).map((h, i) => (
-          <motion.div className="bento-card highlight-card" variants={fadeUp} custom={3 + i} initial="hidden" whileInView="show" viewport={viewportOnce} key={h}>
-            <BadgeCheck size={20} className="accent" />
-            <p>{h}</p>
+      <div className="about-layout">
+        <motion.aside className="about-profile spotlight" variants={fadeUp} custom={0} initial="hidden" animate="show" onPointerMove={useSpotlight}>
+          <div className="about-avatar-wrap">
+            {profile.photoUrl
+              ? <img className="about-avatar" src={profile.photoUrl} alt={"Portrait of " + (profile.name || site.name)} />
+              : <div className="about-avatar-fallback mono">FB</div>}
+          </div>
+          <div className="about-id">
+            <h3>{profile.name || site.name}</h3>
+            <p className="mono dim-line"><MapPin size={13} /> {profile.location}</p>
+            <span className="status about-status"><span className="pulse-dot" /> {profile.status || site.status}</span>
+          </div>
+          <div className="about-actions">
+            <a className="btn primary small" href="#contact">Get in Touch <ArrowRight size={14} /></a>
+            {site.cvUrl
+              ? <a className="btn ghost small" href={site.cvUrl} target="_blank" rel="noreferrer">CV <ExternalLink size={13} /></a>
+              : <a className="btn ghost small" href={site.socials.github} target="_blank" rel="noreferrer"><Github size={14} /> GitHub</a>}
+          </div>
+        </motion.aside>
+
+        <div className="about-main">
+          <motion.div className="about-bio" variants={fadeUp} custom={1} initial="hidden" animate="show">
+            <p className="mono accent card-label"><FolderOpen size={13} /> BIO</p>
+            {(profile.paragraphs || []).map((p, i) => <p key={i} className={i === 0 ? "about-lead" : ""}>{p}</p>)}
           </motion.div>
-        ))}
-      </div>
-      <div className="skills-grid">
-        {skillGroups.map((g, i) => {
-          const Icon = ICONS[g.icon] || Code2
-          return (
-            <motion.div className="skill-card spotlight" variants={fadeUp} custom={i} initial="hidden" whileInView="show" viewport={viewportOnce} key={g.slug}
-              onPointerMove={e => { const r = e.currentTarget.getBoundingClientRect(); e.currentTarget.style.setProperty("--mx", (e.clientX - r.left) + "px"); e.currentTarget.style.setProperty("--my", (e.clientY - r.top) + "px") }}>
-              <h3><Icon size={17} className="accent" /> {g.title}</h3>
-              <div className="chips">{(g.items || []).map(s => <span className="chip mono" key={s}>{s}</span>)}</div>
+
+          {(profile.highlights || []).length > 0 && (
+            <motion.div
+              className={"about-highlights" + (profile.highlights.length === 3 ? " cols-3" : "")}
+              variants={fadeUp} custom={2} initial="hidden" animate="show"
+            >
+              {profile.highlights.map((h) => (
+                <div className="about-hl-pill" key={h}>
+                  <BadgeCheck size={16} className="accent" />
+                  <span>{h}</span>
+                </div>
+              ))}
             </motion.div>
-          )
-        })}
+          )}
+
+          <div className="about-cards">
+            <motion.div className="bento-card now-card spotlight" variants={fadeUp} custom={3} initial="hidden" animate="show" onPointerMove={useSpotlight}>
+              <p className="mono accent card-label"><Clock3 size={13} /> NOW</p>
+              <h3>{profile.nowTitle}</h3>
+              <p>{profile.now}</p>
+            </motion.div>
+            <motion.div className="bento-card edu-card spotlight" variants={fadeUp} custom={4} initial="hidden" animate="show" onPointerMove={useSpotlight}>
+              <p className="mono accent card-label"><GraduationCap size={13} /> EDUCATION</p>
+              <h3>{profile.university}</h3>
+              <p>Focus: web development, computer networks, and HCI.</p>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      <div className="skills-wrap">
+        <div className="skills-head">
+          <span className="mono accent card-label"><Layers size={13} /> TECHNICAL TOOLKIT</span>
+          <span className="skills-line" />
+        </div>
+        <div className="skills-grid">
+          {skillGroups.map((g, i) => {
+            const Icon = ICONS[g.icon] || Code2
+            return (
+              <motion.div className="skill-card spotlight" data-kind={g.icon || "code"} variants={fadeUp} custom={i} initial="hidden" whileInView="show" viewport={viewportOnce} key={g.slug}
+                onPointerMove={useSpotlight}>
+                <h3><span className="skill-icon"><Icon size={16} /></span> {g.title}</h3>
+                <div className="chips">{(g.items || []).map(s => <span className="chip mono" key={s}>{s}</span>)}</div>
+              </motion.div>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
