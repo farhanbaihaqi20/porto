@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { Navbar, Hero, About, Projects, Certificates, Experience, Contact, Footer, CursorGlow } from "./components"
+import { Navbar, Hero, Home, About, Projects, Certificates, Experience, Contact, Footer, CursorGlow } from "./components"
 import { certificates, projects, experience, skillGroups } from "./lib/content"
 
 // Model A+B: gerbang intro dulu, lalu isi per halaman (bukan satu scroll panjang).
@@ -143,7 +143,7 @@ export default function App() {
       <CursorGlow />
       <Navbar active={view} />
       <main className="view-wrap">
-        {view === "top" && <Hero projectCount={projects.length} certCount={certificates.length} mode="app" />}
+        {view === "top" && <Home projects={projects} certificates={certificates} experience={experience} />}
         {view === "about" && <About skillGroups={skillGroups} />}
         {view === "projects" && <Projects projects={projects} />}
         {view === "certificates" && <Certificates certificates={certificates} />}

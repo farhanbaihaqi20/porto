@@ -441,6 +441,75 @@ export function Contact() {
   )
 }
 
+export function Home({ projects, certificates, experience }) {
+  const feat = projects.find(p => p.featured) || projects[0] || {}
+  const latestCert = certificates[0] || {}
+  const latestExp = experience[0] || {}
+  return (
+    <section className="section hub" id="top">
+      <motion.div className="hub-head" variants={fadeUp} custom={0} initial="hidden" animate="show">
+        {profile.photoUrl
+          ? <img className="hub-avatar" src={profile.photoUrl} alt="Portrait of Farhan Baihaqi" />
+          : <span className="hub-avatar mono">FB</span>}
+        <div className="hub-head-text">
+          <p className="mono accent">{"// welcome in"}</p>
+          <h2 className="hub-title">The portfolio of {profile.name || site.name}</h2>
+          <p className="hub-sub">{profile.now || profile.tagline}</p>
+        </div>
+        <span className="status hub-status"><span className="pulse-dot" /> {profile.status || site.status}</span>
+      </motion.div>
+
+      <motion.div className="hub-stats" variants={fadeUp} custom={1} initial="hidden" animate="show">
+        <div className="stat"><strong><Counter to={projects.length} /></strong><span className="mono">Projects shipped</span></div>
+        <div className="stat"><strong><Counter to={certificates.length} /></strong><span className="mono">Certifications</span></div>
+        <div className="stat"><strong><Counter to={experience.length} /></strong><span className="mono">Experience entries</span></div>
+      </motion.div>
+
+      <div className="hub-grid">
+        <motion.a className="hub-card wide spotlight" href="#projects" variants={fadeUp} custom={2} initial="hidden" animate="show" onPointerMove={useSpotlight}>
+          <div className="hub-media"><img src={feat.imageUrl} alt={"Screenshot of " + (feat.title || "featured project")} loading="lazy" /></div>
+          <div className="hub-body">
+            <p className="mono accent">01 · PROJECTS</p>
+            <h3>{projects.length} projects, live and shipped</h3>
+            <p>Featured: <strong>{feat.title}</strong>. {(feat.paragraphs || [])[0]}</p>
+            <span className="view-detail mono">Open Projects <ArrowUpRight size={14} /></span>
+          </div>
+        </motion.a>
+        <motion.a className="hub-card wide spotlight" href="#certificates" variants={fadeUp} custom={3} initial="hidden" animate="show" onPointerMove={useSpotlight}>
+          <div className="hub-media"><img src={latestCert.imageUrl} alt={"Certificate: " + (latestCert.title || "")} loading="lazy" /></div>
+          <div className="hub-body">
+            <p className="mono accent">02 · CERTIFICATES</p>
+            <h3>{certificates.length} certifications earned</h3>
+            <p>Latest: <strong>{latestCert.title}</strong>{latestCert.issuer ? " by " + latestCert.issuer : ""}.</p>
+            <span className="view-detail mono">Open Certificates <ArrowUpRight size={14} /></span>
+          </div>
+        </motion.a>
+      </div>
+
+      <div className="hub-grid small">
+        <motion.a className="hub-card spotlight" href="#about" variants={fadeUp} custom={4} initial="hidden" animate="show" onPointerMove={useSpotlight}>
+          <FolderOpen size={22} className="accent" />
+          <h3>About</h3>
+          <p>{(profile.highlights || []).slice(0, 2).join(" · ")}</p>
+          <span className="view-detail mono">Open About <ArrowUpRight size={14} /></span>
+        </motion.a>
+        <motion.a className="hub-card spotlight" href="#experience" variants={fadeUp} custom={5} initial="hidden" animate="show" onPointerMove={useSpotlight}>
+          <Building2 size={22} className="accent" />
+          <h3>Experience</h3>
+          <p>{latestExp.role}{latestExp.org ? " at " + latestExp.org : ""}{latestExp.period ? " · " + latestExp.period : ""}</p>
+          <span className="view-detail mono">Open Experience <ArrowUpRight size={14} /></span>
+        </motion.a>
+        <motion.a className="hub-card spotlight" href="#contact" variants={fadeUp} custom={6} initial="hidden" animate="show" onPointerMove={useSpotlight}>
+          <Mail size={22} className="accent" />
+          <h3>Contact</h3>
+          <p>{site.email}</p>
+          <span className="view-detail mono">Open Contact <ArrowUpRight size={14} /></span>
+        </motion.a>
+      </div>
+    </section>
+  )
+}
+
 export function Footer({ onReplay }) {
   return (
     <footer>
