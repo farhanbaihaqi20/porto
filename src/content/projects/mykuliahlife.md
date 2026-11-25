@@ -1,7 +1,7 @@
 ---
 title: "MyKuliahLife"
 date: "2026-10-19"
-role: "Solo Developer"
+role: "Full Stack"
 image: "mykuliahlife.webp"
 liveUrl: "https://mykuliahlife.web.id"
 repoUrl: "https://github.com/farhanbaihaqi20/MyKuliahLife"
