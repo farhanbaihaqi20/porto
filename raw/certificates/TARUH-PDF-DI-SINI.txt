@@ -1,0 +1,4 @@
+Taruh PDF / JPG sertifikat baru di folder ini, lalu jalankan:
+  npm run new:cert
+Script akan convert halaman 1 jadi WebP dan membuat file .md-nya.
+Folder raw/ ini tidak ikut ke-deploy, web hanya memuat WebP.

@@ -1,0 +1,2 @@
+Taruh screenshot proyek baru (PNG/JPG) di folder ini, lalu jalankan:
+  npm run new:project
