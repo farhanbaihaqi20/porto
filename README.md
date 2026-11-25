@@ -84,3 +84,7 @@ exact same filenames.
 1. Put your photo file in `src/assets/` (JPG/PNG/WebP, portrait orientation works best), e.g. `src/assets/photo.jpg`.
 2. In `src/content/profile.md`, set `photo: "photo.jpg"` (just the file name).
 3. Commit and push the photo file with git (image files are binary, so they must go through a normal `git push`, not the web editor). Leave `photo: ""` to keep the FB monogram placeholder.
+
+## How the site flows (intro gate + pages)
+
+The site opens on a locked intro screen (name, roles, photo, one **Let's Explore** button); no other content is rendered yet. Exploring is remembered for the browser session. After that, each menu is its own page (Home, About, Projects, Certificates, Experience, Contact) switched with a wipe transition; the URL hash follows the page (`#projects`, `#certificates`, ...) so pages can be shared and the browser Back button works. Opening a deep link such as `/#certificates` skips the intro. The footer has a **Replay Intro** button to see the gate again.

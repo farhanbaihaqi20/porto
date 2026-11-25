@@ -6,7 +6,7 @@ import {
 import {
   Github, Instagram, Linkedin, Mail, MapPin, ArrowUpRight, ArrowRight,
   ExternalLink, Award, X, Check, Copy, Menu, GraduationCap, ShieldCheck,
-  Code2, Database, PenTool, ChevronLeft, ChevronRight, CalendarDays,
+  Code2, Database, PenTool, ChevronLeft, ChevronRight, CalendarDays, RotateCcw,
   Building2, Sparkles, FolderOpen, BadgeCheck, Clock3, Layers
 } from "lucide-react"
 import { createPortal } from "react-dom"
@@ -53,18 +53,15 @@ export function CursorGlow() {
 
 /* ---------------- NAVBAR ---------------- */
 const NAV = [["about", "About"], ["projects", "Projects"], ["certificates", "Certificates"], ["experience", "Experience"], ["contact", "Contact"]]
-export function Navbar() {
+export function Navbar({ active = "top" }) {
   const [scrolled, setScrolled] = useState(false)
-  const [active, setActive] = useState("")
   const [open, setOpen] = useState(false)
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 22 })
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
     window.addEventListener("scroll", onScroll, { passive: true })
-    const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && setActive(e.target.id)), { rootMargin: "-40% 0px -55% 0px" })
-    NAV.forEach(([id]) => { const el = document.getElementById(id); if (el) io.observe(el) })
-    return () => { window.removeEventListener("scroll", onScroll); io.disconnect() }
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
   return (
     <header className={"nav" + (scrolled ? " scrolled" : "")}>
@@ -96,14 +93,14 @@ function Counter({ to, suffix = "" }) {
 
 const MARQUEE = ["React", "Vite", "Supabase", "JavaScript", "Python", "PostgreSQL", "Cisco Networking", "Cyber Security", "PWA", "HCI / UX", "Git & GitHub", "Linux"]
 
-export function Hero({ projectCount, certCount }) {
+export function Hero({ projectCount, certCount, mode = "app", onExplore }) {
   const typed = useTyping(site.roles)
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] })
   const yPhoto = useTransform(scrollYProgress, [0, 1], [0, 60])
   const yText = useTransform(scrollYProgress, [0, 1], [0, 110])
   return (
-    <section className="hero" id="top" ref={ref}>
+    <section className={"hero" + (mode === "intro" ? " intro-mode" : "")} id="top" ref={ref}>
       <div className="hero-bg" aria-hidden="true">
         <motion.div className="blob b1" animate={{ x: [0, 40, 0], y: [0, -30, 0] }} transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }} />
         <motion.div className="blob b2" animate={{ x: [0, -50, 0], y: [0, 25, 0] }} transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }} />
@@ -116,10 +113,14 @@ export function Hero({ projectCount, certCount }) {
         <motion.p className="hero-bio" variants={fadeUp} custom={3}>{profile.tagline}</motion.p>
         <motion.p className="status" variants={fadeUp} custom={4}><span className="pulse-dot" /> {profile.status || site.status}</motion.p>
         <motion.div className="hero-actions" variants={fadeUp} custom={5}>
-          <motion.a className="btn primary" href="#projects" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>View Projects <ArrowRight size={16} /></motion.a>
-          {site.cvUrl
-            ? <motion.a className="btn ghost" href={site.cvUrl} target="_blank" rel="noreferrer" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>Download CV</motion.a>
-            : <motion.a className="btn ghost" href="#contact" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>Get in Touch</motion.a>}
+          {mode === "intro"
+            ? <motion.button className="btn primary explore" onClick={onExplore} whileHover={{ scale: 1.045 }} whileTap={{ scale: 0.97 }}>Let&apos;s Explore <ArrowRight size={18} /></motion.button>
+            : <>
+              <motion.a className="btn primary" href="#projects" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>View Projects <ArrowRight size={16} /></motion.a>
+              {site.cvUrl
+                ? <motion.a className="btn ghost" href={site.cvUrl} target="_blank" rel="noreferrer" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>Download CV</motion.a>
+                : <motion.a className="btn ghost" href="#contact" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>Get in Touch</motion.a>}
+            </>}
         </motion.div>
         <motion.div className="hero-socials" variants={fadeUp} custom={6}>
           <a href={site.socials.github} target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={19} /></a>
@@ -127,11 +128,11 @@ export function Hero({ projectCount, certCount }) {
           <a href={site.socials.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={19} /></a>
           <a href={"mailto:" + site.email} aria-label="Email"><Mail size={19} /></a>
         </motion.div>
-        <motion.div className="hero-stats" variants={fadeUp} custom={7}>
+        {mode === "app" && (<motion.div className="hero-stats" variants={fadeUp} custom={7}>
           <div className="stat"><strong><Counter to={projectCount} /></strong><span className="mono">Projects shipped</span></div>
           <div className="stat"><strong><Counter to={certCount} /></strong><span className="mono">Certifications</span></div>
           <div className="stat"><strong><Counter to={1} /></strong><span className="mono">Internship</span></div>
-        </motion.div>
+        </motion.div>)}
       </motion.div>
       <motion.div className="hero-photo" style={{ y: yPhoto }} initial={{ opacity: 0, scale: 0.94, rotate: 2 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }} aria-hidden="true">
         <div className="photo-frame">
@@ -440,10 +441,11 @@ export function Contact() {
   )
 }
 
-export function Footer() {
+export function Footer({ onReplay }) {
   return (
     <footer>
       <p className="mono">© {new Date().getFullYear()} {site.name} · Semarang</p>
+      {onReplay && <button className="btn ghost small replay-btn" onClick={onReplay}><RotateCcw size={14} /> Replay Intro</button>}
       <div className="hero-socials">
         <a href={site.socials.github} target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17} /></a>
         <a href={site.socials.instagram} target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={17} /></a>
