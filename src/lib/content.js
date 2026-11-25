@@ -24,6 +24,9 @@ function parseValue(v) {
 }
 
 function parseMd(raw) {
+  // Normalisasi CRLF (Windows / git autocrlf) ke LF dulu.
+  // Tanpa ini, clone di Windows membuat semua frontmatter gagal dibaca.
+  raw = raw.replace(/\r\n/g, "\n").replace(/\r/g, "\n")
   const m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
   if (!m) return { data: {}, body: raw.trim() }
   const data = {}
