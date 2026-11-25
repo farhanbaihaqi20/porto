@@ -31,7 +31,7 @@ export function SectionHead({ no, title, sub }) {
     <motion.div className="sec-head" variants={fadeUp} initial="hidden" whileInView="show" viewport={viewportOnce}>
       <span className="mono accent sec-no">{no}</span>
       <div>
-        <h2>{title}<span className="accent">.</span></h2>
+        <h2>{title.split("").map((ch, i) => <span className="ch" key={i} style={{ "--i": i }}>{ch === " " ? "\u00A0" : ch}</span>)}<span className="accent">.</span></h2>
         {sub && <p>{sub}</p>}
       </div>
       <span className="sec-line" />

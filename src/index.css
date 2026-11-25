@@ -224,9 +224,26 @@ footer .hero-socials a{width:32px;height:32px}
 
 /* ===== Revisi: navigasi halus + katalog proyek diperbagus ===== */
 .section { scroll-margin-top: 84px; }
-@keyframes navFlash { 0%, 35% { background-color: rgba(99,102,241,.09); } 100% { background-color: transparent; } }
-.section.nav-flash { animation: navFlash 1.4s ease; }
-.section.nav-flash .sec-head h2 { color: #c7d2fe; transition: color .3s ease; }
+/* Wipe transition pas klik menu */
+.wipe-wrap { position: fixed; inset: 0; z-index: 200; pointer-events: none; }
+.wipe-panel { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.wipe-panel.back { background: #4338ca; }
+.wipe-panel.front { background: #070d1f; }
+.wipe-label { font-size: clamp(20px, 4.5vw, 40px); letter-spacing: .38em; text-indent: .38em; color: #e0e7ff; border: 1px solid rgba(129,140,248,.5); padding: 14px 30px; border-radius: 999px; background: rgba(99,102,241,.12); }
+
+/* Animasi mendarat: zoom halus (semua section) + judul per huruf (beda gaya per section) */
+@keyframes secIn { from { transform: scale(.992); filter: brightness(1.18); } to { transform: scale(1); filter: brightness(1); } }
+.section.landing { animation: secIn .7s ease; }
+.sec-head h2 .ch { display: inline-block; }
+@keyframes chRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes chSlide { from { opacity: 0; transform: translateX(-18px) skewX(-14deg); } to { opacity: 1; transform: translateX(0) skewX(0); } }
+@keyframes chPop { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: scale(1); } }
+@keyframes chBlur { from { opacity: 0; filter: blur(8px); transform: translateY(6px); } to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+.section.landing .sec-head h2 .ch { animation: chRise .55s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i) * 45ms); }
+#projects.landing .sec-head h2 .ch { animation-name: chSlide; }
+#certificates.landing .sec-head h2 .ch { animation-name: chPop; }
+#experience.landing .sec-head h2 .ch { animation-name: chBlur; }
+#contact.landing .contact-big { animation: chRise .7s cubic-bezier(.22,1,.36,1) both; }
 
 .proj-img { position: relative; }
 .proj-card.featured { align-items: start; }
