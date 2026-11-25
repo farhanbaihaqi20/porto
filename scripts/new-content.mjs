@@ -126,9 +126,16 @@ repoUrl: ""
 featured: false
 status: "In Progress"
 stack: ["React", "Vite"]
+summary: "One-line summary of the project and its value."
+problem: "Describe the core problem this project addresses."
+solution: "Describe what you built and the technical approach."
+highlights: [
+  "Key feature or outcome 1",
+  "Key feature or outcome 2"
+]
 ---
 
-Describe the project here: the problem, what you built, and the result.
+Optional extra context or implementation notes here.
 `
   writeFileSync(mdPath, md)
   console.log(`+ Created ${mdPath}  (image: ${image || "NONE YET, set the image field manually"})`)

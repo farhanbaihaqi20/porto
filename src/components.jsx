@@ -240,7 +240,7 @@ export function Projects({ projects }) {
           {cls.includes("featured") && <span className="proj-index mono" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>}
           <p className="mono dim-line">{p.role} · {fmtDate(p.date)}</p>
           <h3>{p.title}</h3>
-          <p className="proj-desc">{(p.paragraphs || [])[0]}</p>
+          <p className="proj-desc">{p.summary || (p.paragraphs || [])[0]}</p>
           <div className="chips">{(p.stack || []).map(s => <span className="chip mono" key={s}>{s}</span>)}</div>
           <span className="view-detail mono">Click to view full project <ArrowUpRight size={14} /></span>
         </div>
@@ -268,6 +268,33 @@ export function Projects({ projects }) {
                   <div><span className="mono"><Layers size={13} /> STACK</span><strong>{(selected.stack || []).join(", ")}</strong></div>
                   <div><span className="mono"><BadgeCheck size={13} /> STATUS</span><strong>{selected.status || (selected.liveUrl ? "Live & shipped" : "In progress")}</strong></div>
                 </div>
+                {selected.summary && <p className="pm-summary">{selected.summary}</p>}
+                {(selected.problem || selected.solution) && (
+                  <div className="pm-case">
+                    {selected.problem && (
+                      <div className="pm-block">
+                        <span className="pm-block-label mono"><Clock3 size={13} /> PROBLEM</span>
+                        <p>{selected.problem}</p>
+                      </div>
+                    )}
+                    {selected.solution && (
+                      <div className="pm-block">
+                        <span className="pm-block-label mono"><Sparkles size={13} /> SOLUTION</span>
+                        <p>{selected.solution}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {Array.isArray(selected.highlights) && selected.highlights.length > 0 && (
+                  <div className="pm-block">
+                    <span className="pm-block-label mono"><BadgeCheck size={13} /> KEY HIGHLIGHTS</span>
+                    <ul className="pm-list">
+                      {selected.highlights.map((item, i) => (
+                        <li key={i}><Check size={14} /><span>{item}</span></li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 {(selected.paragraphs || []).map((para, i) => <p key={i}>{para}</p>)}
                 <div className="pm-actions">
                   {selected.liveUrl && <motion.a className="btn primary" href={selected.liveUrl} target="_blank" rel="noreferrer" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>Visit Live Site <ExternalLink size={15} /></motion.a>}
@@ -471,7 +498,7 @@ export function Home({ projects, certificates, experience }) {
           <div className="hub-body">
             <p className="mono accent">01 · PROJECTS</p>
             <h3>{projects.length} projects, live and shipped</h3>
-            <p>Featured: <strong>{feat.title}</strong>. {(feat.paragraphs || [])[0]}</p>
+            <p>Featured: <strong>{feat.title}</strong>. {feat.summary || (feat.paragraphs || [])[0]}</p>
             <span className="view-detail mono">Open Projects <ArrowUpRight size={14} /></span>
           </div>
         </motion.a>
