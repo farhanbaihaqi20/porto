@@ -5,10 +5,16 @@ tagline: "I build web apps that actually ship, and I'm training in cyber securit
 location: "Semarang, Indonesia"
 university: "Computer Science, Universitas Negeri Semarang"
 status: "Open to internship & projects"
-photo: ""
+photo: "photo.jpeg"
 nowTitle: "What I'm doing now"
 now: "Polishing MyKuliahLife, keeping UNNES Lost & Found running, and finishing my 4th semester coursework."
-highlights: ["3+ projects shipped & live", "4 certifications earned", "1 security internship", "Semarang, Indonesia"]
+highlights:
+  [
+    "3+ projects shipped & live",
+    "4 certifications earned",
+    "1 security internship",
+    "Semarang, Indonesia",
+  ]
 ---
 
 I am a Computer Science student at Universitas Negeri Semarang who focuses on web development. My main projects, MyKuliahLife and UNNES Lost & Found, are both live and used by real people, not just coursework sitting in a folder.
