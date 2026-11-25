@@ -1,13 +1,13 @@
 ---
-title: "AI Literacy Track 314"
-issuer: "Action AI LMS (Act-Preneur)"
+title: "AI Essentials - Action AI Startup University"
+issuer: "Action AI Startup University (UD Impact)"
 date: "2026-11-25"
 expiry: 
 category: "AI"
-image: "action-ai.svg"
-imageFull: "action-ai.svg"
+image: "action-ai.webp"
+imageFull: "action-ai-full.webp"
 credentialUrl: ""
-note: "Completed 77/77 modules (100%), every quiz passed at 100%."
+note: "Stage 1 Certified. Credential ID UDI-202611-aej8t2, issued 25 Nov 2026 for Universitas Negeri Semarang."
 ---
 
-Completed the full AI literacy curriculum: 8 sessions, 27 videos, 8 quizzes, and a published WarungAI app project for small businesses.
+Certificate of Completion for the AI Literacy Training Program: Farhan Baihaqi completed the program and is recognised as an Act-preneur. On the LMS side this was AI Literacy Track 314, finished 77/77 (100%) with every quiz passed at 100%, across 8 sessions and 27 videos.
