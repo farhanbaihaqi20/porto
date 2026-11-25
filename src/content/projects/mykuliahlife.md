@@ -6,6 +6,7 @@ image: "mykuliahlife.svg"
 liveUrl: "https://mykuliahlife.web.id"
 repoUrl: "https://github.com/farhanbaihaqi20/MyKuliahLife"
 featured: true
+status: "Live · Active Development"
 stack: ["React", "Vite", "Supabase", "PWA"]
 ---
 

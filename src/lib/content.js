@@ -3,24 +3,49 @@
 const mdFiles = import.meta.glob("../content/**/*.md", { query: "?raw", import: "default", eager: true })
 const imgFiles = import.meta.glob("../assets/**/*.{webp,jpg,jpeg,png,svg}", { import: "default", eager: true })
 
+function stripQuotes(s) {
+  if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
+    return s.slice(1, -1)
+  }
+  return s
+}
+
 function parseValue(v) {
   v = v.trim()
   if (v.startsWith("[") && v.endsWith("]")) {
     // split by comma, but respect commas inside quotes
     const inner = v.slice(1, -1)
     const parts = []
-    let cur = "", inQ = false
+    let cur = "", inQ = false, qChar = ""
     for (const ch of inner) {
-      if (ch === '"') inQ = !inQ
+      if ((ch === '"' || ch === "'") && (!inQ || qChar === ch)) {
+        inQ = !inQ
+        qChar = inQ ? ch : ""
+      }
       if (ch === "," && !inQ) { parts.push(cur); cur = "" } else cur += ch
     }
     if (cur.trim()) parts.push(cur)
-    return parts.map(s => s.trim().replace(/^"|"$/g, "")).filter(Boolean)
+    return parts.map(s => stripQuotes(s.trim())).filter(Boolean)
   }
   if (v === "true") return true
   if (v === "false") return false
   if (/^-?\d+$/.test(v)) return Number(v)
-  return v.replace(/^"|"$/g, "")
+  return stripQuotes(v)
+}
+
+function isBalancedArray(s) {
+  let depth = 0, inQ = false, qChar = ""
+  for (const ch of s) {
+    if ((ch === '"' || ch === "'") && (!inQ || qChar === ch)) {
+      inQ = !inQ
+      qChar = inQ ? ch : ""
+    }
+    if (!inQ) {
+      if (ch === "[") depth++
+      else if (ch === "]") depth--
+    }
+  }
+  return depth <= 0
 }
 
 function parseMd(raw) {
@@ -30,9 +55,51 @@ function parseMd(raw) {
   const m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
   if (!m) return { data: {}, body: raw.trim() }
   const data = {}
+  let curKey = null
+  let arrayBuf = ""
+
   for (const line of m[1].split("\n")) {
+    const trimmed = line.trim()
+    if (!trimmed) continue
+
+    if (arrayBuf) {
+      arrayBuf += " " + trimmed
+      if (isBalancedArray(arrayBuf)) {
+        data[curKey] = parseValue(arrayBuf)
+        arrayBuf = ""
+        curKey = null
+      }
+      continue
+    }
+
+    if (curKey && trimmed.startsWith("[")) {
+      arrayBuf = trimmed
+      if (isBalancedArray(arrayBuf)) {
+        data[curKey] = parseValue(arrayBuf)
+        arrayBuf = ""
+        curKey = null
+      }
+      continue
+    }
+
+    if (curKey && /^-\s+/.test(trimmed)) {
+      const item = parseValue(trimmed.replace(/^-\s+/, ""))
+      data[curKey] = Array.isArray(data[curKey]) ? [...data[curKey], item] : [item]
+      continue
+    }
+
     const i = line.indexOf(":")
-    if (i > 0) data[line.slice(0, i).trim()] = parseValue(line.slice(i + 1))
+    if (i > 0) {
+      const key = line.slice(0, i).trim()
+      const val = line.slice(i + 1).trim()
+      if (val.startsWith("[") && !isBalancedArray(val)) {
+        curKey = key
+        arrayBuf = val
+      } else {
+        data[key] = parseValue(val)
+        curKey = val === "" ? key : null
+      }
+    }
   }
   return { data, body: m[2].trim() }
 }

@@ -6,6 +6,7 @@ image: "lostfound.svg"
 liveUrl: "https://unicelostandfound.biz.id"
 repoUrl: "https://github.com/farhanbaihaqi20/lostandfound"
 featured: true
+status: "Live & Shipped"
 stack: ["React", "Supabase", "Vercel"]
 ---
 

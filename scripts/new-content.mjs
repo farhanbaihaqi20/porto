@@ -124,6 +124,7 @@ image: "${image}"
 liveUrl: ""
 repoUrl: ""
 featured: false
+status: "In Progress"
 stack: ["React", "Vite"]
 ---
 

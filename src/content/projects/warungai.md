@@ -6,6 +6,7 @@ image: "warungai.svg"
 liveUrl: "https://warung-sapa-jual-laris.lovable.app"
 repoUrl: ""
 featured: false
+status: "Published Prototype"
 stack: ["Lovable", "AI Prompting"]
 ---
 

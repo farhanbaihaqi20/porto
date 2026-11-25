@@ -159,7 +159,7 @@ const ICONS = { code: Code2, database: Database, shield: ShieldCheck, pen: PenTo
 export function About({ skillGroups }) {
   return (
     <section id="about" className="section">
-      <SectionHead no="01" title="About" sub="Edit this whole section in src/content/profile.md and src/content/skills/." />
+      <SectionHead no="01" title="About" sub="Background, current focus, and the tools I work with." />
       <div className="bento">
         <motion.div className="bento-card bio-card" variants={fadeUp} initial="hidden" whileInView="show" viewport={viewportOnce}>
           <p className="mono accent card-label"><FolderOpen size={13} /> BIO</p>
@@ -266,7 +266,7 @@ export function Projects({ projects }) {
                 <div className="pm-meta">
                   <div><span className="mono"><CalendarDays size={13} /> DATE</span><strong>{fmtDate(selected.date)}</strong></div>
                   <div><span className="mono"><Layers size={13} /> STACK</span><strong>{(selected.stack || []).join(", ")}</strong></div>
-                  <div><span className="mono"><BadgeCheck size={13} /> STATUS</span><strong>Live & shipped</strong></div>
+                  <div><span className="mono"><BadgeCheck size={13} /> STATUS</span><strong>{selected.status || (selected.liveUrl ? "Live & shipped" : "In progress")}</strong></div>
                 </div>
                 {(selected.paragraphs || []).map((para, i) => <p key={i}>{para}</p>)}
                 <div className="pm-actions">
@@ -303,7 +303,7 @@ export function Certificates({ certificates }) {
   }, [idx, shown.length])
   return (
     <section id="certificates" className="section">
-      <SectionHead no="03" title="Certificates" sub="Served as lightweight WebP images, never PDFs, so the page stays fast. Click one to open the full viewer." />
+      <SectionHead no="03" title="Certificates" sub="Verified courses, workshops, and certifications. Click any card to open the full viewer." />
       <div className="filters">
         {cats.map(c => (
           <button key={c} className={"filter-btn mono" + (cat === c ? " active" : "")} onClick={() => { setCat(c); setIdx(null) }}>
@@ -355,9 +355,9 @@ export function Certificates({ certificates }) {
                 </div>
                 {selected.note && <p className="cv-note">{selected.note}</p>}
                 {selected.body && <p className="cv-body">{selected.body}</p>}
-                {selected.credentialUrl
-                  ? <a className="btn primary" href={selected.credentialUrl} target="_blank" rel="noreferrer">Verify Credential <ExternalLink size={15} /></a>
-                  : <p className="mono dim-line">Credential link: add it in the certificate .md file</p>}
+                {selected.credentialUrl && (
+                  <a className="btn primary" href={selected.credentialUrl} target="_blank" rel="noreferrer">Verify Credential <ExternalLink size={15} /></a>
+                )}
                 <div className="cv-thumbs">
                   {shown.map((c, i) => (
                     <button key={c.slug} className={i === idx ? "active" : ""} onClick={() => setIdx(i)} aria-label={c.title}>
@@ -381,7 +381,7 @@ export function Experience({ experience }) {
   const lineScale = useSpring(scrollYProgress, { stiffness: 60, damping: 20 })
   return (
     <section id="experience" className="section">
-      <SectionHead no="04" title="Experience" sub="Edit these in src/content/experience/, one file per entry." />
+      <SectionHead no="04" title="Experience" sub="Internships, campus projects, and technical training milestones." />
       <div className="timeline" ref={ref}>
         <motion.span className="tl-progress" style={{ scaleY: lineScale }} />
         {experience.map((x, i) => (
