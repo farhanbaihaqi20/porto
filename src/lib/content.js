@@ -60,7 +60,7 @@ function load(kind) {
 }
 
 export const certificates = load("certificates").sort((a, b) => (b.date || "").localeCompare(a.date || ""))
-export const projects = load("projects").sort((a, b) => (b.date || "").localeCompare(a.date || ""))
+export const projects = load("projects").filter(p => !p.hidden).sort((a, b) => (b.date || "").localeCompare(a.date || ""))
 export const experience = load("experience").sort((a, b) => (a.order || 99) - (b.order || 99))
 export const skillGroups = load("skills").sort((a, b) => (a.order || 99) - (b.order || 99))
 

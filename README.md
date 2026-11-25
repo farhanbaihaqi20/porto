@@ -56,7 +56,7 @@ sudo apt install poppler-utils webp
 
 Drop a screenshot into `raw/projects/`, run `npm run new:project`,
 then edit the `.md` in `src/content/projects/`
-(`liveUrl`, `repoUrl`, `stack`, `featured: true` for the big layout).
+(`liveUrl`, `repoUrl`, `stack`). Layout: `featured: true` shows the project as a big card at the top, `featured: false` shows it as a normal grid card below it (it does NOT hide the project). To hide a project from the site completely, add `hidden: true`.
 
 ## Instagram & LinkedIn
 

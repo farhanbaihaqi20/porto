@@ -4,7 +4,7 @@
   --green:#34d399; --radius:14px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:auto}
 body{background:var(--bg);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .mono{font-family:"JetBrains Mono",monospace}
 .accent{color:var(--accent2)}
@@ -223,10 +223,10 @@ footer .hero-socials a{width:32px;height:32px}
 }
 
 /* ===== Revisi: navigasi halus + katalog proyek diperbagus ===== */
-html { scroll-behavior: smooth; }
 .section { scroll-margin-top: 84px; }
-@keyframes targetPop { 0% { letter-spacing: .04em; } 100% { letter-spacing: normal; } }
-.section:target .sec-head h2 { animation: targetPop .7s ease; }
+@keyframes navFlash { 0%, 35% { background-color: rgba(99,102,241,.09); } 100% { background-color: transparent; } }
+.section.nav-flash { animation: navFlash 1.4s ease; }
+.section.nav-flash .sec-head h2 { color: #c7d2fe; transition: color .3s ease; }
 
 .proj-img { position: relative; }
 .proj-card.featured { align-items: start; }
