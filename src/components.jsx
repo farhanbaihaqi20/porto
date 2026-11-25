@@ -136,9 +136,9 @@ export function Hero({ projectCount, certCount }) {
       <motion.div className="hero-photo" style={{ y: yPhoto }} initial={{ opacity: 0, scale: 0.94, rotate: 2 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }} aria-hidden="true">
         <div className="photo-frame">
           <div className="photo-inner">
-            <span className="mono photo-mono">FB</span>
-            <span className="mono photo-tag">farhan_baihaqi</span>
-            <span className="mono photo-tag dim">semarang, id</span>
+            {profile.photoUrl
+              ? <><img className="photo-img" src={profile.photoUrl} alt="Portrait of Farhan Baihaqi" /><span className="mono photo-tag on-photo">farhan_baihaqi · semarang, id</span></>
+              : <><span className="mono photo-mono">FB</span><span className="mono photo-tag">farhan_baihaqi</span><span className="mono photo-tag dim">semarang, id</span></>}
           </div>
         </div>
         <motion.div className="photo-badge mono" animate={{ y: [0, -8, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}><ShieldCheck size={14} /> IT Security</motion.div>

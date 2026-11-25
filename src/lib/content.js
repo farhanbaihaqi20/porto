@@ -65,4 +65,8 @@ export const experience = load("experience").sort((a, b) => (a.order || 99) - (b
 export const skillGroups = load("skills").sort((a, b) => (a.order || 99) - (b.order || 99))
 
 const profileEntry = Object.entries(mdFiles).find(([p]) => p.endsWith("/content/profile.md"))
-export const profile = profileEntry ? { ...parseMd(profileEntry[1]).data, paragraphs: parseMd(profileEntry[1]).body.split(/\n\n+/).filter(Boolean) } : {}
+export const profile = (() => {
+  if (!profileEntry) return {}
+  const { data, body } = parseMd(profileEntry[1])
+  return { ...data, paragraphs: body.split(/\n\n+/).filter(Boolean), photoUrl: data.photo ? resolveImage(data.photo) : "" }
+})()

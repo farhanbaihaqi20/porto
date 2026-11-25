@@ -6,9 +6,9 @@ export const site = {
   name: "Farhan Baihaqi",
   shortName: "Farhan",
   location: "Semarang, Indonesia",
-  university: "Teknik Informatika, Universitas Negeri Semarang",
+  university: "Computer Science, Universitas Negeri Semarang",
   email: "farhanbaihaqi20@students.unnes.ac.id",
-  roles: ["Web Developer", "Junior IT Security", "Mahasiswa Teknik Informatika"],
+  roles: ["Web Developer", "Junior IT Security", "Computer Science Student"],
   status: "Open to internship & project",
   socials: {
     github: "https://github.com/farhanbaihaqi20",

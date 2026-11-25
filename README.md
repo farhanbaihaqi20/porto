@@ -78,3 +78,9 @@ PLACEHOLDERS (yellow banner). Replace them with real files through the
 `npm run new:cert` / `new:project` flow above, or overwrite the files
 in `src/assets/certificates/` and `src/assets/projects/` using the
 exact same filenames.
+
+## Change the hero photo
+
+1. Put your photo file in `src/assets/` (JPG/PNG/WebP, portrait orientation works best), e.g. `src/assets/photo.jpg`.
+2. In `src/content/profile.md`, set `photo: "photo.jpg"` (just the file name).
+3. Commit and push the photo file with git (image files are binary, so they must go through a normal `git push`, not the web editor). Leave `photo: ""` to keep the FB monogram placeholder.
