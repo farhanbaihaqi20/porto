@@ -12,8 +12,8 @@ export const site = {
   status: "Open to internship & project",
   socials: {
     github: "https://github.com/farhanbaihaqi20",
-    instagram: "https://instagram.com/YOUR_USERNAME",   // <-- REPLACE: your Instagram username
-    linkedin: "https://www.linkedin.com/in/YOUR_USERNAME", // <-- REPLACE: your LinkedIn username
+    instagram: "https://www.instagram.com/fibeln.han/",
+    linkedin: "https://www.linkedin.com/in/farhanbaihaqi20/",
   },
   cvUrl: "", // <-- add your CV PDF link/file here, e.g. "/cv-farhan.pdf"
 }

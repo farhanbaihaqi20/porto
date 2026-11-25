@@ -403,10 +403,11 @@ export function Contact() {
   const copy = async () => {
     try { await navigator.clipboard.writeText(site.email); setCopied(true); setTimeout(() => setCopied(false), 1800) } catch {}
   }
+  const lastSeg = (u) => (u || "").replace(/\/+$/, "").split("/").pop() || ""
   const cards = [
-    { icon: Instagram, label: "Instagram", value: "@YOUR_USERNAME", href: site.socials.instagram, hint: "Edit in src/config/site.js" },
-    { icon: Linkedin, label: "LinkedIn", value: "in/YOUR_USERNAME", href: site.socials.linkedin, hint: "Edit in src/config/site.js" },
-    { icon: Github, label: "GitHub", value: "farhanbaihaqi20", href: site.socials.github, hint: "Open profile" },
+    { icon: Instagram, label: "Instagram", value: "@" + lastSeg(site.socials.instagram), href: site.socials.instagram, hint: "Open profile" },
+    { icon: Linkedin, label: "LinkedIn", value: "in/" + lastSeg(site.socials.linkedin), href: site.socials.linkedin, hint: "Open profile" },
+    { icon: Github, label: "GitHub", value: lastSeg(site.socials.github), href: site.socials.github, hint: "Open profile" },
   ]
   return (
     <section id="contact" className="section">
