@@ -24,7 +24,7 @@ export const fadeUp = {
   hidden: { opacity: 0, y: 28 },
   show: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] } }),
 }
-export const viewportOnce = { once: true, margin: "-60px" }
+export const viewportOnce = { once: false, margin: "-60px" }
 
 export function SectionHead({ no, title, sub }) {
   return (
@@ -231,8 +231,12 @@ export function Projects({ projects }) {
   const card = (p, i, cls) => (
     <Tilt className={"proj-card spotlight " + cls} key={p.slug} onClick={() => setSelected(p)}>
       <motion.div variants={fadeUp} custom={i} initial="hidden" whileInView="show" viewport={viewportOnce} className="proj-motion">
-        <div className="proj-img"><motion.img src={p.imageUrl} alt={"Screenshot of " + p.title} loading="lazy" layoutId={"proj-img-" + p.slug} /></div>
+        <div className="proj-img"><motion.img src={p.imageUrl} alt={"Screenshot of " + p.title} loading="lazy" layoutId={"proj-img-" + p.slug} />
+          {cls.includes("featured") && <span className="proj-badge mono">FEATURED</span>}
+          <span className="proj-date mono">{fmtDate(p.date)}</span>
+        </div>
         <div className="proj-info">
+          {cls.includes("featured") && <span className="proj-index mono" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>}
           <p className="mono dim-line">{p.role} · {fmtDate(p.date)}</p>
           <h3>{p.title}</h3>
           <p className="proj-desc">{(p.paragraphs || [])[0]}</p>
