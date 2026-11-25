@@ -6,6 +6,7 @@ image: "warungai.svg"
 liveUrl: "https://warung-sapa-jual-laris.lovable.app"
 repoUrl: ""
 featured: false
+hidden: true
 status: "Published Prototype"
 stack: ["Lovable", "AI Prompting"]
 summary: "A prompt-driven AI assistant helping small food-stall (warung) owners in Semarang draft customer replies and manage daily selling tasks."

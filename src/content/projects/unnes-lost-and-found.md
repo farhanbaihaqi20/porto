@@ -2,7 +2,7 @@
 title: "UNNES Lost & Found"
 date: "2026-10-27"
 role: "Developer, Team Project"
-image: "lostfound.svg"
+image: "lostfound.webp"
 liveUrl: "https://unicelostandfound.biz.id"
 repoUrl: "https://github.com/farhanbaihaqi20/lostandfound"
 featured: true

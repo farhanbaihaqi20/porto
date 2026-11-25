@@ -2,7 +2,7 @@
 title: "MyKuliahLife"
 date: "2026-10-19"
 role: "Solo Developer"
-image: "mykuliahlife.svg"
+image: "mykuliahlife.webp"
 liveUrl: "https://mykuliahlife.web.id"
 repoUrl: "https://github.com/farhanbaihaqi20/MyKuliahLife"
 featured: true
