@@ -203,7 +203,11 @@ p{color:var(--muted)}
 .tl-dot{position:absolute;right:-6px;top:22px;width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);z-index:2}
 .tl-item.right .tl-dot{right:auto;left:-7px}
 .tl-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.tl-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .tl-date{font-size:.8rem}
+.tl-label{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid rgba(99,102,241,.45);background:rgba(99,102,241,.14);color:#c7d2fe}
+.tl-label.intern{border-color:rgba(52,211,153,.45);background:rgba(52,211,153,.12);color:#6ee7b7}
+.tl-label.cert{border-color:rgba(56,189,248,.45);background:rgba(56,189,248,.12);color:#7dd3fc}
 @media(max-width:760px){
   .timeline::before,.tl-progress{left:6px}
   .tl-item,.tl-item.right{width:100%;margin:0;padding:0 0 26px 30px}

@@ -126,9 +126,41 @@ function load(kind) {
     })
 }
 
+const MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 }
+
+function expSortKey(item) {
+  const period = String(item.period || "")
+  const rawDate = String(item.date || item.endDate || "").trim()
+  const isOngoing = item.ongoing === true || /present|now|current/i.test(period) || /^present$/i.test(rawDate)
+
+  let ts = 0
+  if (rawDate && !/^present$/i.test(rawDate)) {
+    const normalized = /^\d{4}-\d{2}$/.test(rawDate) ? `${rawDate}-01` : /^\d{4}$/.test(rawDate) ? `${rawDate}-12-31` : rawDate
+    const parsed = Date.parse(normalized)
+    if (!Number.isNaN(parsed)) ts = parsed
+  }
+
+  if (!ts && period) {
+    const matches = [...period.matchAll(/\b(?:(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+)?(\d{4})\b/gi)]
+    for (const m of matches) {
+      const y = Number(m[2])
+      const mo = m[1] ? MONTHS[m[1].toLowerCase().slice(0, 3)] : 12
+      const candidate = Date.UTC(y, mo - 1, 1)
+      if (candidate > ts) ts = candidate
+    }
+  }
+
+  return { isOngoing: isOngoing ? 1 : 0, ts, order: Number(item.order) || 99 }
+}
+
 export const certificates = load("certificates").sort((a, b) => (b.date || "").localeCompare(a.date || ""))
 export const projects = load("projects").filter(p => !p.hidden).sort((a, b) => (b.date || "").localeCompare(a.date || ""))
-export const experience = load("experience").sort((a, b) => (a.order || 99) - (b.order || 99))
+export const experience = load("experience").sort((a, b) => {
+  const ka = expSortKey(a), kb = expSortKey(b)
+  if (kb.isOngoing !== ka.isOngoing) return kb.isOngoing - ka.isOngoing
+  if (kb.ts !== ka.ts) return kb.ts - ka.ts
+  return ka.order - kb.order
+})
 export const skillGroups = load("skills").sort((a, b) => (a.order || 99) - (b.order || 99))
 
 const profileEntry = Object.entries(mdFiles).find(([p]) => p.endsWith("/content/profile.md"))

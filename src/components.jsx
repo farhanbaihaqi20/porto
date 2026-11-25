@@ -402,6 +402,13 @@ export function Certificates({ certificates }) {
 }
 
 /* ---------------- EXPERIENCE (animated timeline) ---------------- */
+function labelTone(label = "") {
+  const s = label.toLowerCase()
+  if (s.includes("intern")) return "intern"
+  if (s.includes("cert") || s.includes("course") || s.includes("training")) return "cert"
+  return "work"
+}
+
 export function Experience({ experience }) {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 75%", "end 60%"] })
@@ -411,19 +418,25 @@ export function Experience({ experience }) {
       <SectionHead no="04" title="Experience" sub="Internships, campus projects, and technical training milestones." />
       <div className="timeline" ref={ref}>
         <motion.span className="tl-progress" style={{ scaleY: lineScale }} />
-        {experience.map((x, i) => (
-          <motion.div className={"tl-item" + (i % 2 ? " right" : "")} key={x.slug}
-            initial={{ opacity: 0, x: i % 2 ? 44 : -44 }} whileInView={{ opacity: 1, x: 0 }} viewport={viewportOnce} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}>
-            <motion.span className="tl-dot" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={viewportOnce} transition={{ type: "spring", stiffness: 300, damping: 14, delay: 0.15 }} />
-            <div className="tl-card spotlight" onPointerMove={useSpotlight}>
-              <p className="mono accent tl-date">{x.period}</p>
-              <h3>{x.role}</h3>
-              <p className="mono dim-line">{x.org}</p>
-              <p>{x.body}</p>
-              <div className="chips">{(x.tags || []).map(t => <span className="chip mono" key={t}>{t}</span>)}</div>
-            </div>
-          </motion.div>
-        ))}
+        {experience.map((x, i) => {
+          const label = x.label || x.type || x.category
+          return (
+            <motion.div className={"tl-item" + (i % 2 ? " right" : "")} key={x.slug}
+              initial={{ opacity: 0, x: i % 2 ? 44 : -44 }} whileInView={{ opacity: 1, x: 0 }} viewport={viewportOnce} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}>
+              <motion.span className="tl-dot" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={viewportOnce} transition={{ type: "spring", stiffness: 300, damping: 14, delay: 0.15 }} />
+              <div className="tl-card spotlight" onPointerMove={useSpotlight}>
+                <div className="tl-top">
+                  <p className="mono accent tl-date">{x.period}</p>
+                  {label && <span className={"tl-label mono " + labelTone(label)}>{label}</span>}
+                </div>
+                <h3>{x.role}</h3>
+                <p className="mono dim-line">{x.org}</p>
+                <p>{x.body}</p>
+                <div className="chips">{(x.tags || []).map(t => <span className="chip mono" key={t}>{t}</span>)}</div>
+              </div>
+            </motion.div>
+          )
+        })}
       </div>
     </section>
   )

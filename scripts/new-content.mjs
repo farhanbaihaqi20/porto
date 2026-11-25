@@ -25,7 +25,8 @@ if (process.argv[2] === "exp") {
 role: "New Role"
 org: "Organization"
 period: "2026"
-order: 99
+date: "2026-01-01"
+label: "Work & Projects"
 tags: []
 ---
 

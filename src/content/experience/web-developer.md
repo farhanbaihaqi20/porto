@@ -2,7 +2,9 @@
 role: "Web Developer (Independent & Team Projects)"
 org: "MyKuliahLife, UNNES Lost & Found"
 period: "2025 - Present"
-order: 1
+date: "2026-11-25"
+ongoing: true
+label: "Work & Projects"
 tags: ["React", "Supabase", "Vercel"]
 ---
 

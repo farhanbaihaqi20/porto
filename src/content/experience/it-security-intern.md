@@ -2,7 +2,8 @@
 role: "Junior IT Security Intern"
 org: "Codelines UNNES, DevXperience 2026"
 period: "Sep - Oct 2026"
-order: 4
+date: "2026-10-18"
+label: "Internship"
 tags: ["XSS", "SQL Injection", "Threat Hunting"]
 ---
 

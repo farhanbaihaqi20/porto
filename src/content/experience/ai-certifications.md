@@ -2,7 +2,8 @@
 role: "AI Certifications"
 org: "Google for Education & Action AI LMS"
 period: "Nov 2026"
-order: 3
+date: "2026-11-25"
+label: "Certification"
 tags: ["Gemini", "AI Literacy"]
 ---
 

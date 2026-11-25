@@ -2,7 +2,8 @@
 role: "Industrial Networking Essentials"
 org: "Cisco NetAcad"
 period: "Nov 2026"
-order: 2
+date: "2026-11-17"
+label: "Course & Cert"
 tags: ["Networking", "Routing"]
 ---
 
